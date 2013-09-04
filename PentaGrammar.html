@@ -1,0 +1,298 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE>BNF for PentaGrammar.jj</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.4  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20130903;9264620">
+	<STYLE TYPE="text/css">
+	<!--
+		H2.cjk { font-family: "SimSun" }
+		H2.ctl { font-family: "Mangal" }
+		PRE.cjk { font-family: "NSimSun", monospace }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="it-IT" DIR="LTR">
+<H1 ALIGN=CENTER>BNF for PentaGrammar.jj</H1>
+<H2 CLASS="western" ALIGN=CENTER>TOKENS</H2>
+<TABLE CELLPADDING=2 CELLSPACING=2>
+	<TR>
+		<TD>
+			<PRE CLASS="western">&lt;DEFAULT&gt; SKIP : {
+&quot; &quot;
+| &quot;\r&quot;
+| &quot;\t&quot;
+| &quot;\n&quot;
+}
+
+   </PRE>
+		</TD>
+	</TR>
+	<TR>
+		<TD>
+			<PRE CLASS="western">&lt;DEFAULT&gt; TOKEN : 
+{
+        &lt; SEMITUNE : &quot;#&quot; | &quot;!&quot;&gt; 
+|       &lt; SILENCE : &quot;SILENCE&quot; &gt; 
+|       &lt; TUNE : &quot;DO&quot; | &quot;RE&quot; | &quot;MI&quot; | &quot;FA&quot; | &quot;SOL&quot; | &quot;LA&quot; | &quot;SI&quot; | &quot;DO^&quot; | &quot;RE^&quot; | &quot;MI^&quot; | &quot;FA^&quot; | &quot;SOL^&quot; | &quot;LA^&quot; | &quot;SI^&quot; &gt;  
+|       &lt; SEMIBREVE : &quot;(1)&quot; &gt;   
+|       &lt; MINIM : &quot;(2)&quot; &gt;       
+|       &lt; CROTCHET : &quot;(4)&quot; &gt;    
+|       &lt; QUAVER : &quot;(8)&quot; &gt;              
+|       &lt; SEMIQUAVER : &quot;(16)&quot; &gt;         
+|       &lt; DEMISEMIQUAVER : &quot;(32)&quot; &gt;             
+|       &lt; HEMIDEMISEMIQUAVER : &quot;(64)&quot; &gt; 
+|       &lt; ENDOFBEAT : &quot;|&quot; &gt; 
+|       &lt; CROSSBEAT : &quot;+&quot; &gt; 
+|       &lt; DOT : &quot;.&quot; &gt; 
+|       &lt; DIGIT: [&quot;0&quot;-&quot;9&quot;] &gt; 
+|       &lt; INTEGER : (&lt; DIGIT &gt;)+ &gt; 
+|       &lt; ID : &lt;CHAR&gt; (&lt;CHAR&gt; | &lt;DIGIT&gt;)* &gt;     
+|       &lt; CHAR: [&quot;A&quot;-&quot;Z&quot;] | [&quot;a&quot;-&quot;z&quot;] &gt; 
+}
+
+   </PRE>
+		</TD>
+	</TR>
+</TABLE>
+<H2 CLASS="western" ALIGN=CENTER>NON-TERMINALS</H2>
+<TABLE CELLPADDING=2 CELLSPACING=2>
+	<TR>
+		<TD>
+			<P ALIGN=RIGHT><A NAME="prod1"></A>Scope</P>
+		</TD>
+		<TD>
+			<P ALIGN=CENTER>::=</P>
+		</TD>
+		<TD>
+			<P ALIGN=LEFT>&quot;SHEET&quot; &lt; ID &gt; &quot;{&quot;
+			<A HREF="#prod2">Declarations</A> <A HREF="#prod7">Essay</A> &quot;}&quot;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD>
+			<P ALIGN=RIGHT><A NAME="prod2"></A>Declarations</P>
+		</TD>
+		<TD>
+			<P ALIGN=CENTER>::=</P>
+		</TD>
+		<TD>
+			<P ALIGN=LEFT>( <A HREF="#prod3">BeatDeclaration</A> )?
+			<A HREF="#prod4">SpeedDeclaration</A> <A HREF="#prod5">InstrumentDeclaration</A>
+			<A HREF="#prod6">VelocityDeclaration</A> ( <A HREF="#prod4">StropheDeclaration</A>
+			)*</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD>
+			<P ALIGN=RIGHT><A NAME="prod3"></A>BeatDeclaration</P>
+		</TD>
+		<TD>
+			<P ALIGN=CENTER>::=</P>
+		</TD>
+		<TD>
+			<P ALIGN=LEFT>&quot;BEAT&quot; &quot;=&quot; &lt; DIGIT &gt; &quot;/&quot;
+			(&lt; SEMIBREVE &gt; | &lt; MINIM &gt; | &lt; CROTCHET &gt; | &lt;
+			QUAVER &gt; | &lt; SEMIQUAVER &gt; | &lt; DEMISEMIQUAVER &gt; | &lt;
+			HEMIDEMISEMIQUAVER &gt;) &quot;;&quot;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD>
+			<P ALIGN=RIGHT><A NAME="prod4"></A>SpeedDeclaration</P>
+		</TD>
+		<TD>
+			<P ALIGN=CENTER>::=</P>
+		</TD>
+		<TD>
+			<P ALIGN=LEFT>&quot;VELOCITY&quot; &quot;=&quot; &lt; INTEGER &gt;
+			&quot;;&quot;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD>
+			<P ALIGN=RIGHT><A NAME="prod5"></A>InstrumentDeclaration</P>
+		</TD>
+		<TD>
+			<P ALIGN=CENTER>::=</P>
+		</TD>
+		<TD>
+			<P ALIGN=LEFT>&quot;INSTRUMENT&quot; &quot;=&quot; &lt; ID &gt;
+			&quot;;&quot;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD>
+			<P ALIGN=RIGHT><A NAME="prod6"></A>StropheDeclaration</P>
+		</TD>
+		<TD>
+			<P ALIGN=CENTER>::=</P>
+		</TD>
+		<TD>
+			<P ALIGN=LEFT>&quot;STROPHE&quot; &lt; ID &gt; &quot;{&quot; (
+			<A HREF="#prod8">Sequence</A> )? &quot;}&quot;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD>
+			<P ALIGN=RIGHT><A NAME="prod7"></A>Essay</P>
+		</TD>
+		<TD>
+			<P ALIGN=CENTER>::=</P>
+		</TD>
+		<TD>
+			<P ALIGN=LEFT>&quot;ESSAY&quot; &lt; ID &gt; &quot;{&quot; (
+			<A HREF="#prod8">Sequence</A> )? &quot;}&quot;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD>
+			<P ALIGN=RIGHT><A NAME="prod8"></A>Sequence</P>
+		</TD>
+		<TD>
+			<P ALIGN=CENTER>::=</P>
+		</TD>
+		<TD>
+			<P ALIGN=LEFT>( <A HREF="#prod9">Notes</A> )+</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD>
+			<P ALIGN=RIGHT><A NAME="prod9"></A>Notes</P>
+		</TD>
+		<TD>
+			<P ALIGN=CENTER>::=</P>
+		</TD>
+		<TD>
+			<P ALIGN=LEFT><A HREF="#prod10">Beat</A> | &lt; ID &gt;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD>
+			<P ALIGN=RIGHT><A NAME="prod10"></A>Beat</P>
+		</TD>
+		<TD>
+			<P ALIGN=CENTER>::=</P>
+		</TD>
+		<TD>
+			<P ALIGN=LEFT>(<A HREF="#prod11">Sign</A>)+ | &lt; ENDOFBEAT &gt; 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD>
+			<P ALIGN=RIGHT><A NAME="prod11"></A>Sign</P>
+		</TD>
+		<TD>
+			<P ALIGN=CENTER>::=</P>
+		</TD>
+		<TD>
+			<P ALIGN=LEFT><A HREF="#prod12">Group</A> | <A HREF="#prod14">Single</A></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD>
+			<P ALIGN=RIGHT><A NAME="prod12"></A>Group</P>
+		</TD>
+		<TD>
+			<P ALIGN=CENTER>::=</P>
+		</TD>
+		<TD>
+			<P ALIGN=LEFT>&quot;[&quot; <A HREF="#prod15">Note</A> ( <A HREF="#prod13">Others</A>
+			)* &quot;]&quot; <A HREF="#prod18">Flagged</A></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD>
+			<P ALIGN=RIGHT><A NAME="prod13"></A>Others</P>
+		</TD>
+		<TD>
+			<P ALIGN=CENTER>::=</P>
+		</TD>
+		<TD>
+			<P ALIGN=LEFT>&quot;,&quot; <A HREF="#prod15">Note</A></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD>
+			<P ALIGN=RIGHT><A NAME="prod14"></A>Single</P>
+		</TD>
+		<TD>
+			<P ALIGN=CENTER>::=</P>
+		</TD>
+		<TD>
+			<P ALIGN=LEFT>( <A HREF="#prod15">Note</A> | &lt; SILENCE &gt; )
+			<A HREF="#prod16">Duration</A> 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD>
+			<P ALIGN=RIGHT><A NAME="prod15"></A>Note</P>
+		</TD>
+		<TD>
+			<P ALIGN=CENTER>::=</P>
+		</TD>
+		<TD>
+			<P ALIGN=LEFT>&lt; SEMITUNE &gt;? | &lt; TUNE &gt; 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD>
+			<P ALIGN=RIGHT><A NAME="prod16"></A>Duration</P>
+		</TD>
+		<TD>
+			<P ALIGN=CENTER>::=</P>
+		</TD>
+		<TD>
+			<P ALIGN=LEFT>( <A HREF="#prod18">Flagged</A> | <A HREF="#prod19">Unflagged</A>
+			) &quot;.&quot;? ( <A HREF="#prod17">Extend</A> )* 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD>
+			<P ALIGN=RIGHT><A NAME="prod17"></A>Extend</P>
+		</TD>
+		<TD>
+			<P ALIGN=CENTER>::=</P>
+		</TD>
+		<TD>
+			<P ALIGN=LEFT>&lt; CROSSBEAT &gt;? ( <A HREF="#prod18">Flagged</A>
+			| <A HREF="#prod19">Unflagged</A> ) &quot;.&quot;? 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD>
+			<P ALIGN=RIGHT><A NAME="prod18"></A>Flagged</P>
+		</TD>
+		<TD>
+			<P ALIGN=CENTER>::=</P>
+		</TD>
+		<TD>
+			<P ALIGN=LEFT>&lt; QUAVER &gt; | &lt; SEMIQUAVER &gt; | &lt;
+			DEMISEMIQUAVER &gt; | &lt; HEMIDEMISEMIQUAVER &gt; 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD>
+			<P ALIGN=RIGHT><A NAME="prod19"></A>Unflagged</P>
+		</TD>
+		<TD>
+			<P ALIGN=CENTER>::=</P>
+		</TD>
+		<TD>
+			<P ALIGN=LEFT>&lt; SEMIBREVE &gt; | &lt; MINIM &gt; | &lt;
+			CROTCHET &gt;</P>
+		</TD>
+	</TR>
+</TABLE>
+<P><BR><BR>
+</P>
+</BODY>
+</HTML>

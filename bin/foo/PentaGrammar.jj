@@ -1,0 +1,156 @@
+/**
+ * JavaCC template file created by SF JavaCC plugin 1.5.17+ wizard for JavaCC 1.5.0+
+ */
+options
+{
+  JDK_VERSION = "1.5";
+  static = true;
+}
+
+PARSER_BEGIN(PentaParser)
+package foo;
+
+public class PentaParser
+{
+ 
+}
+
+PARSER_END(PentaParser)
+
+SKIP :
+{
+  " "
+| "\r"
+| "\t"
+| "\n"
+}
+
+void Scope() : { }
+{
+	"SHEET " < ID > "{" Declarations() Essay() "}"
+
+	
+}
+
+void Declarations() : { }
+{
+  	 (BeatDeclaration())? SpeedDeclaration() InstrumentDeclaration() VelocityDeclaration() (StropheDeclaration())*
+}
+
+void BeatDeclaration() : { }
+{
+  	"BEAT" "=" < DIGIT > "/" (< SEMIBREVE > | < MINIM > | < CROTCHET > | < QUAVER > | < SEMIQUAVER > | < DEMISEMIQUAVER > | < HEMIDEMISEMIQUAVER >) ";"
+}
+
+void VelocityDeclaration() : { }
+{
+  	"VELOCITY" "=" < INTEGER > ";"
+}
+
+void SpeedDeclaration() : { }
+{
+  	"SPEED" "=" < INTEGER > ";"
+}
+
+void InstrumentDeclaration() : { }
+{
+  	"INSTRUMENT" "=" < ID > ";"
+}
+
+void StropheDeclaration() : { }
+{
+  	"STROPHE" < ID > "{" (Sequence())? "}"
+}
+
+void Essay() : { }
+{
+  	"ESSAY" < ID > "{" (Sequence())? "}"
+}
+
+void Sequence() : { }
+{
+	(Notes())+
+}
+
+void Notes() : { }
+{
+   	Beat() | < ID >
+}
+
+void Beat() : { }
+{
+   	(Sign())+  < ENDOFBEAT >
+}
+
+
+void Sign() : { }
+{
+	Group() | Single() 
+}
+
+void Group() : { }
+{
+	"[" Note() (Others())* "]"  Flagged()  
+}
+
+void Others() : { }
+{
+	"," Note()
+}
+
+void Single() : { }
+{
+	(Note() | <  SILENCE > ) Duration() 
+}
+
+void Note() : { }
+{
+	(< SEMITUNE >)? < TUNE > 
+}
+
+void Duration() : { }
+{
+	(Flagged() | Unflagged()) (< DOT >)? (Extend())*
+}
+
+void Extend() : { }
+{
+	 (< CROSSBEAT >)? (Flagged() | Unflagged()) (< DOT >)? 
+}
+
+void Flagged() : { }
+{
+	< QUAVER > | < SEMIQUAVER >  | < DEMISEMIQUAVER >  | < HEMIDEMISEMIQUAVER >
+}
+
+void Unflagged() : { }
+{
+	< SEMIBREVE > | < MINIM > | < CROTCHET >
+}
+
+
+
+TOKEN : 
+{
+  	< SEMITUNE : "#" | "!"> |
+	< SILENCE : "SILENCE" > |
+  	< TUNE : "DO" | "RE" | "MI" | "FA" | "SOL" | "LA" | "SI" | "DO^" | "RE^" | "MI^" | "FA^" | "SOL^" | "LA^" | "SI^" > |
+  	< GROUP : "_" > |
+  	< SEMIBREVE : "(1)" > 	|
+	< MINIM : "(2)" >  	|
+	< CROTCHET : "(4)" >	|
+ 	< QUAVER : "(8)" >		|
+ 	< SEMIQUAVER : "(16)" >		|
+ 	< DEMISEMIQUAVER : "(32)" >		|
+ 	< HEMIDEMISEMIQUAVER : "(64)" >	|
+ 	< ENDOFBEAT : "|" > |
+ 	< CROSSBEAT : "+" > |
+ 	< DOT : "." > |
+
+ 	< DIGIT: ["0"-"9"] > |
+ 	< INTEGER : (< DIGIT >)+ > |
+ 	< ID: <CHAR> (<CHAR> | <DIGIT>)*>	|
+ 	< CHAR: ["A"-"Z"] | ["a"-"z"]> 
+ 	
+}
+
